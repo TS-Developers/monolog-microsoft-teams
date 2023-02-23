@@ -4,6 +4,7 @@ namespace CMDISP\MonologMicrosoftTeams;
 
 use Monolog\Logger;
 use Monolog\Handler\AbstractProcessingHandler;
+use Monolog\LogRecord;
 
 class TeamsLogHandler extends AbstractProcessingHandler
 {
@@ -43,7 +44,7 @@ class TeamsLogHandler extends AbstractProcessingHandler
      *
      * @return TeamsMessage
      */
-    protected function getMessage(array $record): TeamsMessage
+    protected function getMessage(LogRecord $record): TeamsMessage
     {
         return new TeamsMessage([
             'title' => $record['level_name'] . ': ' . $record['message'],
@@ -55,7 +56,7 @@ class TeamsLogHandler extends AbstractProcessingHandler
     /**
      * @param array $record
      */
-    protected function write(array $record): void
+    protected function write(LogRecord $record): void
     {
         $json = json_encode($this->getMessage($record));
 
